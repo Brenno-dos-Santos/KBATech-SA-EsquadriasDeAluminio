@@ -1,6 +1,0 @@
-@SAEsquadriasDeAluminioApi_HostAddress = http://localhost:5037
-
-GET {{SAEsquadriasDeAluminioApi_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
