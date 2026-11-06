@@ -9,13 +9,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.12" />
   </ItemGroup>
-
-<<<<<<< HEAD:SAEsquadriasDeAluminioApi/SAEsquadriasDeAluminioApi.csproj
-=======
   <ItemGroup>
     <Folder Include="Controllers\" />
     <Folder Include="Data\" />
   </ItemGroup>
 
->>>>>>> 33aaad332b0a528c714e5f9d9e46178b5696c023:Back/SAEsquadriasDeAluminioApi/SAEsquadriasDeAluminioApi/SAEsquadriasDeAluminioApi.csproj
 </Project>
