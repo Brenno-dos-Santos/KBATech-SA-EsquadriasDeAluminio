@@ -11,7 +11,7 @@
 ---
 
 ## 📌 Links do Projeto
-
+* 🙌 **Front ( VUE )** [SA-Front em vue ](https://github.com/KaickFlauzin08/SA-Esquadrilhas-De-Aluminio.git)
 * 🎨 **Protótipo Figma:** [SA-Projetos no Figma](https://www.figma.com/design/QA09pjDhDUcLgIEaoSsTL2/SA-Projetos?t=L39DqTOoAVBBm24Y-1)
 * 📄 **Documento de Visão:** [Documento no Google Docs](https://docs.google.com/document/d/1ZJ0EyygSE4PUboTAzvI3ybeYhsSrJMvQX3Dwmz2__kE/edit?tab=t.0)[cite: 1]
 * 📊 **Fluxos e Arquitetura:** [Diagrama no Mermaid](https://mermaid.ai/app/projects/6a668f01-063b-4aab-8ec5-55f76dc9f5b2/diagrams/1a3906fd-9d10-4d18-8c99-d9701001ad2c/edit)
