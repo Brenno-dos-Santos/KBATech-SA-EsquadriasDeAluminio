@@ -143,6 +143,5 @@ dotnet build -t:Run -f net10.0-android
 
 Este projeto é de propriedade privada e seu uso é restrito para fins de desenvolvimento interno.
 
-```
 
-```
+`
