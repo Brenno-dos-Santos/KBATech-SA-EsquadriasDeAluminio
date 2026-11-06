@@ -1,4 +1,4 @@
-```markdown
+
 # 🏗️ SA-Projetos - Sistema de Gestão e Controle de Obras Externas
 
 ![.NET 10](https://img.shields.io/badge/.NET-10.0-512BD4?style=flat&logo=dotnet)
