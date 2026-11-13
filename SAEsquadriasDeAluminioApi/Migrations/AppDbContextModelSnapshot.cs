@@ -81,6 +81,62 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.ToTable("DisparosFeedbacks");
                 });
 
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Equipe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Especialidade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Equipes");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.EquipeMembro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EquipeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FuncaoNaEquipe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EquipeMembros");
+                });
+
             modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.HistoricoAcompanhamento", b =>
                 {
                     b.Property<int>("Id")
@@ -359,6 +415,28 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.EquipeMembro", b =>
+                {
+                    b.HasOne("SAEsquadriasDeAluminioApi.Models.Equipe", "Equipe")
+                        .WithMany("Membros")
+                        .HasForeignKey("EquipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAEsquadriasDeAluminioApi.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Equipe");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Equipe", b =>
+                {
+                    b.Navigation("Membros");
                 });
 #pragma warning restore 612, 618
         }

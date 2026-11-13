@@ -17,6 +17,7 @@ namespace SAEsquadriasDeAluminioApi.Data
             public DbSet<DisparoFeedback> DisparosFeedbacks { get; set; }
             public DbSet<LiberacaoInstalacao> LiberacoesInstalacaos { get; set; }
             public DbSet<AvaliacaoPosVenda> AvaliacoesPosVendas { get; set; }
-
-        }
+            public DbSet<Equipe> Equipes { get; set; }
+            public DbSet<EquipeMembro> EquipeMembros { get; set; }
+    }
     }
