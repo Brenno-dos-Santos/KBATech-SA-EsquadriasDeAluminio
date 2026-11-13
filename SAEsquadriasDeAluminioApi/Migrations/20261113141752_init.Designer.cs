@@ -12,8 +12,8 @@ using SAEsquadriasDeAluminioApi.Data;
 namespace SAEsquadriasDeAluminioApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20261113121724_atualizar2")]
-    partial class atualizar2
+    [Migration("20261113141752_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -82,6 +82,62 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("DisparosFeedbacks");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Equipe", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("Ativa")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Especialidade")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Nome")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Equipes");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.EquipeMembro", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EquipeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("FuncaoNaEquipe")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EquipeId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("EquipeMembros");
                 });
 
             modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.HistoricoAcompanhamento", b =>
@@ -265,7 +321,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("DataInicioContrato")
+                    b.Property<DateTime>("DataInicioContrato")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DataMedicaoFinal")
@@ -280,6 +336,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.Property<string>("StatusProducao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TecnicoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -298,6 +357,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EtapaProcesso")
@@ -309,6 +369,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
 
                     b.Property<int>("ProjetoId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Resolvido")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TipoOcorrencia")
                         .IsRequired()
@@ -355,6 +418,28 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.EquipeMembro", b =>
+                {
+                    b.HasOne("SAEsquadriasDeAluminioApi.Models.Equipe", "Equipe")
+                        .WithMany("Membros")
+                        .HasForeignKey("EquipeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAEsquadriasDeAluminioApi.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Equipe");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Equipe", b =>
+                {
+                    b.Navigation("Membros");
                 });
 #pragma warning restore 612, 618
         }

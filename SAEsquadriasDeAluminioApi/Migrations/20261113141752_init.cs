@@ -46,6 +46,22 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Equipes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Especialidade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Ativa = table.Column<bool>(type: "bit", nullable: false),
+                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Equipes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HistoricosAcompanhamentos",
                 columns: table => new
                 {
@@ -90,7 +106,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ProjetoId = table.Column<int>(type: "int", nullable: false),
-                    VendedorId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
                     DataLiberacao = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EscopoLiberado = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Observacoes = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -107,7 +123,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VendedorId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
                     NomeCliente = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TelefoneCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     EmailCliente = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -146,8 +162,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrcamentoId = table.Column<int>(type: "int", nullable: false),
+                    TecnicoId = table.Column<int>(type: "int", nullable: true),
                     DataMedicaoFinal = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DataInicioContrato = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DataInicioContrato = table.Column<DateTime>(type: "datetime2", nullable: false),
                     PrazoFinalEntrega = table.Column<DateTime>(type: "datetime2", nullable: true),
                     StatusProducao = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
@@ -167,8 +184,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     DataRegistro = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EtapaProcesso = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     TipoOcorrencia = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    FotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Resolvido = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -183,8 +201,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Numero = table.Column<int>(type: "int", nullable: false),
-                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Numero = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Roles = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Ativo = table.Column<bool>(type: "bit", nullable: false)
@@ -193,6 +210,43 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "EquipeMembros",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EquipeId = table.Column<int>(type: "int", nullable: false),
+                    UsuarioId = table.Column<int>(type: "int", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: true),
+                    FuncaoNaEquipe = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EquipeMembros", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EquipeMembros_Equipes_EquipeId",
+                        column: x => x.EquipeId,
+                        principalTable: "Equipes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_EquipeMembros_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EquipeMembros_EquipeId",
+                table: "EquipeMembros",
+                column: "EquipeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_EquipeMembros_UserId",
+                table: "EquipeMembros",
+                column: "UserId");
         }
 
         /// <inheritdoc />
@@ -203,6 +257,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "DisparosFeedbacks");
+
+            migrationBuilder.DropTable(
+                name: "EquipeMembros");
 
             migrationBuilder.DropTable(
                 name: "HistoricosAcompanhamentos");
@@ -224,6 +281,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
 
             migrationBuilder.DropTable(
                 name: "RegistrosObras");
+
+            migrationBuilder.DropTable(
+                name: "Equipes");
 
             migrationBuilder.DropTable(
                 name: "Users");
