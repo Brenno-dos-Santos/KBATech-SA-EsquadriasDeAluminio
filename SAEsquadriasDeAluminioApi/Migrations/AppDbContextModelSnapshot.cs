@@ -174,7 +174,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.Property<int>("ProjetoId")
                         .HasColumnType("int");
 
-                    b.Property<int>("VendedorId")
+                    b.Property<int>("UsuarioId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -213,11 +213,11 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.Property<string>("TelefoneCliente")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UsuarioId")
+                        .HasColumnType("int");
+
                     b.Property<decimal>("ValorTotal")
                         .HasColumnType("decimal(18,2)");
-
-                    b.Property<int>("VendedorId")
-                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -262,7 +262,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime?>("DataInicioContrato")
+                    b.Property<DateTime>("DataInicioContrato")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime?>("DataMedicaoFinal")
@@ -277,6 +277,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.Property<string>("StatusProducao")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TecnicoId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -295,6 +298,7 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Descricao")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("EtapaProcesso")
@@ -306,6 +310,9 @@ namespace SAEsquadriasDeAluminioApi.Migrations
 
                     b.Property<int>("ProjetoId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Resolvido")
+                        .HasColumnType("bit");
 
                     b.Property<string>("TipoOcorrencia")
                         .IsRequired()
@@ -337,14 +344,11 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Numero")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("Numero")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PasswordHash")
+                    b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
