@@ -238,6 +238,63 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.ToTable("LiberacoesInstalacaos");
                 });
 
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Ocorrencia", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool>("BloqueiaObra")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("DataAbertura")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("DataResolucao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Descricao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FotoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ProjetoId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ReportadoPorId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("Resolvida")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Severidade")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("SolucaoAplicada")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Tipo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProjetoId");
+
+                    b.HasIndex("ReportadoPorId");
+
+                    b.ToTable("Ocorrencias");
+                });
+
             modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Orcamento", b =>
                 {
                     b.Property<int>("Id")
@@ -432,6 +489,25 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                     b.Navigation("Equipe");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Ocorrencia", b =>
+                {
+                    b.HasOne("SAEsquadriasDeAluminioApi.Models.Projeto", "Projeto")
+                        .WithMany()
+                        .HasForeignKey("ProjetoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SAEsquadriasDeAluminioApi.Models.User", "ReportadoPor")
+                        .WithMany()
+                        .HasForeignKey("ReportadoPorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
+
+                    b.Navigation("ReportadoPor");
                 });
 
             modelBuilder.Entity("SAEsquadriasDeAluminioApi.Models.Equipe", b =>
