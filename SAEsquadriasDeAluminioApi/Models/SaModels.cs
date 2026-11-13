@@ -13,7 +13,7 @@
     public class Orcamento
     {
         public int Id { get; set; }
-        public int VendedorId { get; set; }
+        public int UsuarioId { get; set; }
         public string NomeCliente { get; set; } = string.Empty;
         public string? TelefoneCliente { get; set; }
         public string? EmailCliente { get; set; }
@@ -47,15 +47,15 @@
         public decimal ValorUnitario { get; set; }
         public int Quantidade { get; set; }
     }
-
     public class Projeto
     {
         public int Id { get; set; }
         public int OrcamentoId { get; set; }
+        public int? TecnicoId { get; set; } // <-- Para Designação de Equipes
         public DateTime? DataMedicaoFinal { get; set; }
-        public DateTime? DataInicioContrato { get; set; }
+        public DateTime DataInicioContrato { get; set; }
         public DateTime? PrazoFinalEntrega { get; set; }
-        public string StatusProducao { get; set; } = string.Empty; // AGUARDANDO_MEDICAO | EM_PRODUCAO | FABRICADO | EM_INSTALACAO | CONCLUIDO | EMBARGADO
+        public string StatusProducao { get; set; } = string.Empty;
     }
 
     public class RegistroObra
@@ -64,12 +64,12 @@
         public int ProjetoId { get; set; }
         public int UsuarioId { get; set; }
         public DateTime DataRegistro { get; set; }
-        public string EtapaProcesso { get; set; } = string.Empty; // INICIO_OBRA | EM_ANDAMENTO | CONCLUIDO | OCORRENCIA_ERRO
-        public string TipoOcorrencia { get; set; } = string.Empty; // NENHUMA | DIFICULDADE_TECNICA | ITEM_INACABADO | DIVERGENCIA_ESCOPO | DANO_MATERIAL
-        public string? Descricao { get; set; }
+        public string EtapaProcesso { get; set; } = string.Empty;
+        public string TipoOcorrencia { get; set; } = string.Empty;
+        public string Descricao { get; set; } = string.Empty;
         public string? FotoUrl { get; set; }
+        public bool Resolvido { get; set; } // <-- Para Gestão de Pendências e Ocorrências
     }
-
     public class DisparoFeedback
     {
         public int Id { get; set; }
@@ -84,7 +84,7 @@
     {
         public int Id { get; set; }
         public int ProjetoId { get; set; }
-        public int VendedorId { get; set; }
+        public int UsuarioId { get; set; }
         public DateTime DataLiberacao { get; set; }
         public string? EscopoLiberado { get; set; }
         public string? Observacoes { get; set; }
