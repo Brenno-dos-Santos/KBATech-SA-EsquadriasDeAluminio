@@ -19,5 +19,6 @@ namespace SAEsquadriasDeAluminioApi.Data
             public DbSet<AvaliacaoPosVenda> AvaliacoesPosVendas { get; set; }
             public DbSet<Equipe> Equipes { get; set; }
             public DbSet<EquipeMembro> EquipeMembros { get; set; }
+        public DbSet<Ocorrencia> Ocorrencias { get; set; }
     }
     }

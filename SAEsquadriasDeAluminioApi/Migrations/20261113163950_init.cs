@@ -238,6 +238,42 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Ocorrencias",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProjetoId = table.Column<int>(type: "int", nullable: false),
+                    ReportadoPorId = table.Column<int>(type: "int", nullable: false),
+                    Titulo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Tipo = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Severidade = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descricao = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FotoUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BloqueiaObra = table.Column<bool>(type: "bit", nullable: false),
+                    Resolvida = table.Column<bool>(type: "bit", nullable: false),
+                    SolucaoAplicada = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DataAbertura = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DataResolucao = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ocorrencias", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Ocorrencias_Projetos_ProjetoId",
+                        column: x => x.ProjetoId,
+                        principalTable: "Projetos",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Ocorrencias_Users_ReportadoPorId",
+                        column: x => x.ReportadoPorId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_EquipeMembros_EquipeId",
                 table: "EquipeMembros",
@@ -247,6 +283,16 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                 name: "IX_EquipeMembros_UserId",
                 table: "EquipeMembros",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ocorrencias_ProjetoId",
+                table: "Ocorrencias",
+                column: "ProjetoId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Ocorrencias_ReportadoPorId",
+                table: "Ocorrencias",
+                column: "ReportadoPorId");
         }
 
         /// <inheritdoc />
@@ -271,19 +317,22 @@ namespace SAEsquadriasDeAluminioApi.Migrations
                 name: "LiberacoesInstalacaos");
 
             migrationBuilder.DropTable(
+                name: "Ocorrencias");
+
+            migrationBuilder.DropTable(
                 name: "Orcamentos");
 
             migrationBuilder.DropTable(
                 name: "ParcelasPagamentos");
 
             migrationBuilder.DropTable(
-                name: "Projetos");
-
-            migrationBuilder.DropTable(
                 name: "RegistrosObras");
 
             migrationBuilder.DropTable(
                 name: "Equipes");
+
+            migrationBuilder.DropTable(
+                name: "Projetos");
 
             migrationBuilder.DropTable(
                 name: "Users");
